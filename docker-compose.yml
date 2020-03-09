@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  publisaiz_postgres:
+    container_name: publisaiz_postgres
+    image: postgres:9.6
+    restart: always
+    environment:
+      - POSTGRES_DB=quarkus
+      - POSTGRES_PASSWORD=!!??krykiet123
+      - POSTGRES_USER=korsarz
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./postgres_data:/var/lib/postgresql/data"
+      - "./initdb:/docker-entrypoint-initdb.d"
+
+  publisaiz_phppgadmin:
+    container_name: publisaiz_phppgadmin
+    image: dockage/phppgadmin
+    ports:
+      - "99:80"
+    environment:
+      - PHP_PG_ADMIN_SERVER_HOST=publisaiz_postgres
+      - PHP_PG_ADMIN_SERVER_PORT=5432
+      - PHP_PG_ADMIN_SERVER_DEFAULT_DB=quarkus
+
+
